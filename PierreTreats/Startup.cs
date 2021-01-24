@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PierreTreats.Models;
 
-namespace Factory
+namespace PierreTreats
 {
   public class Startup
   {
@@ -27,6 +28,10 @@ namespace Factory
       services.AddEntityFrameworkMySql()
         .AddDbContext<PierreTreatsContext>(options => options
         .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
+
+      services.AddIdentity<ApplicationUser, IdentityRole>()
+        .AddEntityFrameworkStores<PierreTreatsContext>()
+        .AddDefaultTokenProviders();
     }
 
     public void Configure(IApplicationBuilder app)
@@ -34,6 +39,8 @@ namespace Factory
       app.UseStaticFiles();
 
       app.UseDeveloperExceptionPage();
+
+      app.UseAuthentication();
 
       app.UseMvc(routes =>
       {
