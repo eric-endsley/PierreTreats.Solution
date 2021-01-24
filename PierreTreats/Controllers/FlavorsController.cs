@@ -30,7 +30,7 @@ namespace PierreTreats.Controllers
         [HttpPost]
         public ActionResult Create(Flavor flavor)
         {
-            _db.Flavors.Add(flavor)
+            _db.Flavors.Add(flavor);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -40,15 +40,31 @@ namespace PierreTreats.Controllers
             var thisFlavor = _db.Flavors
                 .Include(flavor => flavor.Treats)
                 .ThenInclude(join => join.Treat)
-                .FirOrDefault(flavor => flavor.FlavorId == id);
-            return view (thisFlavor);
+                .FirstOrDefault(flavor => flavor.FlavorId == id);
+            return View(thisFlavor);
         }
 
         public ActionResult AddTreat(int id)
         {
             var thisFlavor = _db.Flavors.FirstOrDefault(flavor => flavor.FlavorId == id);
-            ViewBag.TreatId = new SelectList(_db.Treats, "TreatId". "TreatName");
+            ViewBag.TreatId = new SelectList(_db.Treats, "TreatId", "TreatName");
             return View(thisFlavor);
+        }
+
+        [HttpPost]
+        public ActionResult AddFlavor(Flavor flavor, int TreatId)
+        {
+            if (TreatId != 0)
+            {
+                var returnedJoin = _db.TreatFlavor
+                    .Any(join => join.TreatId == TreatId && join.FlavorId == flavor.FlavorId);
+                if (!returnedJoin)
+                {
+                    _db.TreatFlavor.Add(new TreatFlavor () { TreatId = TreatId, FlavorId = flavor.FlavorId });
+                }
+            }
+            _db.SaveChanges();
+            return RedirectToAction("Details", new { id = flavor.FlavorId });
         }
     }
 }
