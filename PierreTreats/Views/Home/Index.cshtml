@@ -1,0 +1,29 @@
+@{
+    Layout = "_Layout";
+}
+
+@using PierreTreats.Models;
+
+<h1>Factory Database</h1>
+<div class="row">
+    <div class="col-6">
+        <h3>Treats:</h3> 
+        @foreach(Treat treat in ViewBag.Treats)
+        {
+            <ul>
+                <li>@Html.ActionLink($"{treat.TreatName}", "Details", "Treats", new { id = treat.TreatId })</li>
+            </ul>
+        }
+        <h5>@Html.ActionLink("View Treats Only", "Index", "Engineers")</h3>
+    </div>
+    <div class="col-6">
+        <h3>Flavors:</h3>
+        @foreach(Flavor flavor in ViewBag.Flavors)
+        {
+            <ul>
+                <li>@Html.ActionLink($"{flavor.FlavorName}","Details", "Flavors",  new { id = flavor.FlavorId })</li>
+            </ul>
+        }
+        <h5>@Html.ActionLink("View Flavors Only", "Index", "Flavors")</h3>
+    </div>
+</div>
