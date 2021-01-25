@@ -1,8 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Security.Claims;
 using PierreTreats.Models;
 
 namespace PierreTreats.Controllers
@@ -22,11 +26,13 @@ namespace PierreTreats.Controllers
             return View(flavorList);
         }
 
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Create(Flavor flavor)
         {
@@ -44,6 +50,7 @@ namespace PierreTreats.Controllers
             return View(thisFlavor);
         }
 
+        [Authorize]
         public ActionResult AddTreat(int id)
         {
             var thisFlavor = _db.Flavors.FirstOrDefault(flavor => flavor.FlavorId == id);
@@ -51,8 +58,9 @@ namespace PierreTreats.Controllers
             return View(thisFlavor);
         }
 
+        [Authorize]
         [HttpPost]
-        public ActionResult AddFlavor(Flavor flavor, int TreatId)
+        public ActionResult AddTreat(Flavor flavor, int TreatId)
         {
             if (TreatId != 0)
             {

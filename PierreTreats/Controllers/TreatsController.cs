@@ -1,8 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Security.Claims;
 using PierreTreats.Models;
 
 namespace PierreTreats.Controllers
@@ -22,6 +26,7 @@ namespace PierreTreats.Controllers
             return View(treatList);
         }
 
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -45,6 +50,7 @@ namespace PierreTreats.Controllers
             return View(thisTreat);
         }
 
+        [Authorize]
         public ActionResult AddFlavor(int id)
         {
             var thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
@@ -68,6 +74,7 @@ namespace PierreTreats.Controllers
             return RedirectToAction("Details", new { id = treat.TreatId });
         }
 
+        [Authorize]
         public ActionResult Edit(int id)
         {
             var thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
@@ -82,6 +89,7 @@ namespace PierreTreats.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public ActionResult Delete(int id)
         {
             var thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
