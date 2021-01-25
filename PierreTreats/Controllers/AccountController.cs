@@ -12,7 +12,6 @@ namespace PierreTreats.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         
-        
     public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, PierreTreatsContext db)
     {
       _userManager = userManager;
@@ -63,6 +62,7 @@ namespace PierreTreats.Controllers
         return View();
       }
     }
+    
     [HttpPost]
     public async Task<ActionResult> LogOff()
     {
