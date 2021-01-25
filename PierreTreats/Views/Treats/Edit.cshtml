@@ -1,0 +1,17 @@
+@{
+    Layout = "_Layout";
+}
+
+@model PierreTreats.Models.Treat
+
+<h3>Rename This Treat</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.TreatId)
+
+    <p>New Treat Name</p>
+    @Html.EditorFor(model => model.TreatName)
+
+    <input type="submit" value="Save" class="btn btn-default" />
+}

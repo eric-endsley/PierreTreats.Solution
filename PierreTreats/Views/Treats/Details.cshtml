@@ -1,0 +1,30 @@
+@{
+    Layout = "_Layout";
+}
+
+@using PierreTreats.Models;
+@model PierreTreats.Models.Treat
+
+<h3>Treat Details</h3>
+<h4>@Model.TreatName</h4>
+
+@if(Model.Flavors.Count == 0)
+{
+    <p>This treat has no flavor at all! Disgusting!</p>
+}
+else
+{
+    <h5>This Treat has these Flavors:</h5>
+    <ul>
+        @foreach(var join in Model.Flavors)
+        {
+            <li>@join.Flavor.FlavorName</li>
+        }
+    </ul>
+}
+
+<br>
+<p>@Html.ActionLink("Add a new Flavor to this Treat", "AddFlavor", new { id = Model.TreatId })</p>
+<p>@Html.ActionLink("Rename this treat", "Edit", new { id = Model.TreatId})</p>
+<p>@Html.ActionLink("Delete this treat", "Delete", new { id = Model.TreatId})</p>
+<p>@Html.ActionLink("Return to Treat List", "Index")</p></p>
